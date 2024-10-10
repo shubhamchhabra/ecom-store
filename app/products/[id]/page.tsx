@@ -2,13 +2,15 @@
 // app/products/[id]/page.tsx
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import Rating from "@/app/components/Rating";
 
 type Product = {
   id: number;
-  name: string;
+  title: string;
   price: number;
   description: string;
   image: string;
+  rating: {rate: number, count: number};
 };
 
 export default function ProductDetailPage() {
@@ -27,6 +29,8 @@ export default function ProductDetailPage() {
         const response = await fetch(`https://fakestoreapi.com/products/${id}`);
         if (!response.ok) throw new Error("Product not found");
         const data = await response.json();
+
+        console.log(data,"product")
         setProduct(data);
       } catch (error) {
         console.error("Error fetching product:", error);
@@ -38,7 +42,6 @@ export default function ProductDetailPage() {
 
     fetchProduct();
   }, [id, router]);
-
   if (loading) return <p>Loading...</p>;
   if (!product) return <p>Product not found</p>;
 
@@ -47,11 +50,12 @@ export default function ProductDetailPage() {
       <div className="flex flex-col md:flex-row items-start gap-8">
         <img
           src={product.image}
-          alt={product.name}
+          alt={product.title}
           className="w-full md:w-1/2 h-auto object-cover"
         />
         <div className="flex flex-col flex-1">
-          <h1 className="text-3xl font-bold">{product.name}</h1>
+          <h1 className="text-3xl font-bold">{product.title}</h1>
+          <Rating initialRating={product.rating.rate} totalStars={5} />
           <p className="mt-2 text-gray-600">${product.price.toFixed(2)}</p>
           <p className="mt-4">{product.description}</p>
         </div>

@@ -25,3 +25,9 @@ body {
     text-wrap: balance;
   }
 }
+
+.logo-text{
+  font-family: monospace;
+  font-size: 20px;
+  font-style: italic;
+}
