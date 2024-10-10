@@ -1,7 +1,7 @@
 "use client";
 // app/products/[id]/page.tsx
 import { useEffect, useState } from "react";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 type Product = {
   id: number;
